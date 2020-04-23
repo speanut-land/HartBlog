@@ -1,2 +1,3 @@
-## computer summary 
-放在github的个人总结性学习的文章
+## computer summary
+
+As a front-end developer, this is a step-by-step summary of personal computer knowledge.
