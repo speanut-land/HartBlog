@@ -3,7 +3,7 @@
  * @return {number}
  */
 // solve this problem by mathematical artithmetic sequence
-var waysToChange = function (n: number): number {
+var waysToChange = function(n: number): number {
   let res: number = 0;
   for (let n25 = 0; n25 <= n / 25; n25++) {
     let temp = n - n25 * 25;
@@ -14,7 +14,7 @@ var waysToChange = function (n: number): number {
 };
 
 // by dynamic programming
-var waysToChange = function (n: number): number {
+var waysToChange = function(n: number): number {
   const coins = [1, 5, 10, 25];
   const dp = [...Array(n + 1)].map(_ => 0);
   dp[0] = 1;
