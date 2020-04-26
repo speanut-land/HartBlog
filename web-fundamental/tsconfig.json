@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./build",
     "sourceMap": true,
-    "target": "ES5",
+    "rootDir": "./src",
+    "target": "ESNext",
     "lib": ["ES2015", "DOM"]
   }
 }
