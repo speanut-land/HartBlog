@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"
+    />
+    <title></title>
+  </head>
+
+  <body>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <div class="obsever-value">0</div>
+    <button onclick="increaseNum()">increaseNum</button>
+    <input type="text" name="" id="input" />
+    <script>
+      // TODO:  对于一个VM Observe来说, 还可以动态的创建DOM, 只需要一个父节点,然后挂载在其上
+      class Observer {
+        value = 0;
+        maintainedDom;
+        className;
+        constructor(className) {
+          this.className = className;
+          this.maintainedDom = Array.from(
+            document.getElementsByClassName(className)
+          );
+        }
+        set updateValue(val) {
+          this.value += val;
+          this.updateView(this.value);
+        }
+        set stringify(val) {
+          this.updateView(val);
+        }
+        updateView(innerHTML) {
+          setTimeout(() => {
+            this.maintainedDom.forEach((val) => {
+              val.innerHTML = innerHTML;
+            });
+          });
+        }
+      }
+      let $Observer = new Observer("obsever-value");
+      function increaseNum() {
+        if (Reflect.set($Observer, "updateValue", 2)) {
+          console.log("他舅成功了");
+        }
+      }
+      document.getElementById("input").addEventListener("input", function () {
+        Reflect.set($Observer, "stringify", this.value);
+      });
+      console.log(window.increaseNum);
+    </script>
+  </body>
+</html>
