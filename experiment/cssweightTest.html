@@ -12,8 +12,13 @@
     </style>
   </head>
   <body>
-    <div id="div1"></div>
+    <input />
+
     <script>
+      var str = '<div><p>Examplee</p></div><script>alert("testing!")</script>';
+      document.body.innerHTML += str;
+    </script>
+    <!-- <script>
       function number(from,to) {
         let curr = from;
     setTimeout(function go() {
@@ -23,6 +28,6 @@
       }
     }, 1000);
   }number(1,7)
-    </script>
+    </script> -->
   </body>
 </html>
