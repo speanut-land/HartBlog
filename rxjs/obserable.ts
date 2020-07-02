@@ -4,8 +4,8 @@ export class Observable {
     this._subscribe = subscribe;
   }
 
-  pipe(...operations) {
-    return operations.reduce((prev, fn) => fn(prev), this);
+  pipe(...operator) {
+    return operator.reduce((prev, fn) => fn(prev), this);
   }
 
   subscribe(observer) {
