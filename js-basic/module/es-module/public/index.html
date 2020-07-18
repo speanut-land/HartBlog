@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="background-color: aliceblue; height: 100px; width: 100px;">
+      es6 module test
+    </div>
+    <script>
+      async function load() {
+        let say = await import("./index.js");
+        say.hi(); // Hello!
+        say.bye(); // Bye!
+        say.default(); // Module loaded (export default)!
+      }
+      console.log(1);
+      setTimeout(load, 5000);
+    </script>
+  </body>
+</html>

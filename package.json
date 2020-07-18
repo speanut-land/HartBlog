@@ -1,0 +1,24 @@
+{
+  "name": "computeSummary",
+  "version": "1.0.0",
+  "description": "As a front-end developer, this is a step-by-step summary of personal computer knowledge Which include computer networks,operation systems, computer components, microcomputer interfaces and algorithm In algorithm directory, contains the leetcode code and common data structures written by pure javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/speanut-land/HartBlog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/speanut-land/HartBlog/issues"
+  },
+  "homepage": "https://github.com/speanut-land/HartBlog#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "koa": "^2.13.0"
+  }
+}

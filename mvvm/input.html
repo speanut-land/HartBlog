@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="ccc" />
+    <script>
+      class Ccc {
+        id = 123;
+        constructor(name) {
+          this.name = name;
+        }
+      }
+      let c = new Ccc("hello");
+      Object.keys(c).forEach((value) => console.log(value));
+      console.log(c.__proto__.prototype);
+      // Object.keys(c.__proto__).forEach((value) => console.log(value));
+      // setInterval(() => {
+      //   console.log(id.value);
+      // }, 500);
+    </script>
+  </body>
+</html>

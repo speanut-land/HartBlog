@@ -10,5 +10,5 @@ class Test {
 
 let c = new Test();
 c.b();
-
+a = 1;
 setTimeout(c.c, 1000);

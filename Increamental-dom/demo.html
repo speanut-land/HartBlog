@@ -132,6 +132,21 @@
         }
         elementClose("span");
       }
+      elementClose("p");
+      render2(data);
+    }
+
+    function render2(data) {
+      elementOpen("ul");
+      {
+        text("Counter: ");
+        elementOpen("li");
+        {
+          text(data.counter);
+        }
+        elementClose("li");
+      }
+      elementClose("ul");
     }
 
     document.querySelector("button").addEventListener("click", () => {
@@ -145,7 +160,7 @@
 
     const data = {
       user: "Alexey",
-      counter: 1,
+      counter: 2,
     };
 
     patch(document.body, render, data);
