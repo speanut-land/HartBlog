@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        height: 100px;
+        background-color: antiquewhite;
+        position: relative;
+      }
+      .child-1 {
+        flex-grow: 1;
+        background-color: aqua;
+      }
+      .child-2 {
+        width: 300px;
+        height: 100px;
+        background-color: blue;
+        z-index: 10;
+        position: fixed;
+        transform: translateZ(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="child-1"></div>
+      <div class="child-2"></div>
+      <!-- <div class="child-3"></div> -->
+    </div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="height: 100px; width: 100px; background-color: antiquewhite;">
+      我是service2
+    </div>
+    <script>
+      window.onerror = (a, b, c, d) => {
+        console.log(a, b, c, d);
+      };
+    </script>
+    <script src="./index2.js"></script>
+    <script
+      src="http://localhost:3001/index1.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
