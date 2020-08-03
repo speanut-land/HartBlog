@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .mask {
+        position: relative;
+        top: 150px;
+        font-family: calibri;
+        width: 150px;
+        padding: 10px;
+        border: 1px dashed #bbb;
+        text-align: center;
+        background-color: #ddd;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div
+        id="yourBtn"
+        style="
+          height: 50px;
+          width: 100px;
+          border: 1px dashed #bbb;
+          cursor: pointer;
+        "
+        onclick="getFile()"
+      >
+        Click to upload!
+      </div>
+      <div style="height: 0px; width: 0px; overflow: hidden;">
+        <input id="upfile" type="file" value="upload" onchange="sub(this)" />
+      </div>
+    </div>
+    <script>
+      function getFile() {
+        document.getElementById("upfile").click();
+      }
+      function sub(obj) {
+        var file = obj.value;
+        var fileName = file.split("\\");
+        console.log(obj.files);
+      }
+    </script>
+  </body>
+</html>

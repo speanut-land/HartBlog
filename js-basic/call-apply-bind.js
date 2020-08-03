@@ -26,7 +26,7 @@ function sayHi(age, sex) {
   console.log(this.name, age, sex);
   return 1;
 }
-let personSayHi = sayHi.bind(person, 25);
+let personSayHi = sayHi.newBind(person, 25);
 console.log(new personSayHi());
 
 const cccc = {
