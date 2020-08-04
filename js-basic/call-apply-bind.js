@@ -11,11 +11,11 @@ Function.prototype.newCall = function (context, ...parameter) {
 };
 Function.prototype.newBind = function (context, ...innerArgs) {
   let ctx = this;
-  console.log(this, 1);
-  return function (...finalArgs) {
-    console.log(context, 2);
+  bound.prototype = this;
+  function bound(...finalArgs) {
     return ctx.call(context, ...innerArgs, ...finalArgs);
-  };
+  }
+  return bound;
 };
 
 let person = {
