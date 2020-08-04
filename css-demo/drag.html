@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      canvas#chart {
+        border: 1px solid #777;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="can1" width="800" height="600"></canvas>
+    <script>
+      var can1 = document.getElementById("can1");
+      var ctx = can1.getContext("2d");
+      nums = [268, 1236, 1273, 1545, 1988];
+      datas = [
+        "11.1-11.2",
+        "11.3-11.9",
+        "11.10-11.16",
+        "11.17-11.23",
+        "11.24-11.30",
+      ];
+      //画出坐标线
+      function drawBorder() {
+        ctx.beginPath();
+        ctx.moveTo(100, 50);
+        ctx.lineTo(100, 550);
+        ctx.moveTo(100, 550);
+        ctx.lineTo(600, 550);
+        ctx.closePath();
+        ctx.stroke();
+      }
+      //画出折线
+      function drawLine() {
+        for (i = 0; i < nums.length - 1; i++) {
+          //起始坐标
+          var numsY = 550 - (nums[i] / 500) * 100;
+          var numsX = i * 100 + 150;
+          //终止坐标
+          var numsNY = 550 - (nums[i + 1] / 500) * 100;
+          var numsNX = (i + 1) * 100 + 150;
+          ctx.beginPath();
+          ctx.moveTo(numsX, numsY);
+          ctx.lineTo(numsNX, numsNY);
+          ctx.lineWidth = 6;
+          ctx.strokeStyle = "#80aa33";
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+      //绘制折线点的菱形和数值，横坐标值，纵坐标值
+      function drawBlock() {
+        for (i = 0; i <= nums.length; i++) {
+          var numsY = 550 - (nums[i] / 500) * 100;
+          var numsX = i * 100 + 150;
+          ctx.beginPath();
+          // 画出折线上的方块
+          ctx.moveTo(numsX - 4, numsY);
+          ctx.lineTo(numsX, numsY - 4);
+          ctx.lineTo(numsX + 4, numsY);
+          ctx.lineTo(numsX, numsY + 4);
+          ctx.fill();
+          ctx.font = "15px scans-serif";
+          ctx.fillStyle = "black";
+          //折线上的点值
+          var text = ctx.measureText(nums[i]);
+          ctx.fillText(nums[i], numsX - text.width, numsY - 10);
+          //绘制纵坐标
+          var colText = ctx.measureText((nums.length - i) * 500);
+          ctx.fillText(
+            (nums.length - i) * 500,
+            90 - colText.width,
+            i * 100 + 55
+          );
+          //绘制横坐标并判断
+          if (i < 5) {
+            var rowText = ctx.measureText(datas[i]);
+            ctx.fillText(datas[i], numsX - rowText.width / 2, 570);
+          } else if (i == 5) {
+            return;
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+      drawBorder();
+      drawLine();
+      drawBlock();
+    </script>
+  </body>
+</html>

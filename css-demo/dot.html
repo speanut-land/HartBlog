@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .dots-canvas {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .white-box {
+        position: relative;
+        width: 60%;
+        height: auto;
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 1em;
+        display: block;
+        background-color: rgba(256, 256, 256, 1);
+      }
+      h1 {
+        display: block;
+        padding: 1em 0;
+        font-family: "Verdana", sans-serif;
+        font-size: 20px;
+      }
+
+      .copy {
+        text-align: center;
+        line-height: 1.5;
+      }
+
+      h2 {
+        font-family: "Verdana", sans-serif;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="dots" class="dots-canvas"></canvas>
+    <script>
+      var canvas,
+        ctx,
+        mouseX = 0,
+        mouseY = 0,
+        lastHit;
+      (hits = []),
+        (elemDist = 50),
+        (dotRadius = 4),
+        (lineWidth = 4),
+        (lineColor = "#EC644B"),
+        (hitPointColor = lineColor);
+
+      var grid = (function () {
+        var dots = [];
+        function init() {}
+
+        function add(i, j, dot) {
+          if (!dots[i]) {
+            dots[i] = [];
+          }
+          dots[i][j] = dot;
+        }
+
+        function get(i, j) {
+          return dots[i][j];
+        }
+
+        return {
+          gridElementDist: elemDist,
+          add: add,
+          get: get,
+          dots: dots,
+        };
+      })();
+
+      function Hit(x, y, dot) {
+        this.x = x;
+        this.y = y;
+        this.dot = dot;
+      }
+
+      Hit.prototype.isNeighborOf = function (neighbor) {
+        if (this.y === neighbor.y) {
+          return Math.abs(this.x - neighbor.x) === 1;
+        }
+        if (this.x === neighbor.x) {
+          return Math.abs(this.y - neighbor.y) === 1;
+        }
+        return false;
+      };
+      Hit.prototype.drawConnection = function (neighbor, ctx) {
+        ctx.beginPath();
+        ctx.moveTo(this.dot.x, this.dot.y);
+        ctx.lineTo(neighbor.dot.x, neighbor.dot.y);
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+      };
+
+      function Dot(x, y, radius, ctx) {
+        this.x = x;
+        this.y = y;
+        this.isHit = false;
+        this.radius = radius;
+        this.ctx = ctx;
+        this.drawMe();
+      }
+
+      Dot.prototype.drawMe = function () {
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+        var x = Math.floor(Math.random() * 100) + 1;
+        var y = Math.floor(Math.random() * 100) + 1;
+        var width = Math.floor(Math.random() * 300) + 1;
+        var height = Math.floor(Math.random() * 100) + 1;
+        var colors = [
+          "#EC644B",
+          "#663399",
+          "#F22613",
+          "#1BBC9B",
+          "#336E7B",
+          "#F89406",
+          "#F27935",
+          "#ABB7B7",
+          "#2ECC71",
+          "#26A65B",
+          "#22313F",
+          "#E08283",
+        ];
+        var randomColor = colors[Math.floor(Math.random() * colors.length)];
+        this.ctx.fillStyle = randomColor;
+        //this.ctx.fillStyle = 'red';
+        this.ctx.fill();
+      };
+
+      Dot.prototype.highlight = function () {
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
+        this.ctx.fillStyle = hitPointColor;
+        this.ctx.fill();
+        this.ctx.closePath();
+      };
+
+      var isRetina = window.devicePixelRatio > 1,
+        factor = 1;
+
+      if (isRetina) {
+        factor = 2;
+      }
+      function init() {
+        var i = (j = 0);
+
+        canvas = document.getElementById("dots");
+        canvas.width = $(window).width() * factor;
+        canvas.height = $(window).height() * factor;
+        ctx = canvas.getContext("2d");
+        while (i * grid.gridElementDist < canvas.width) {
+          for (j = 0; j * grid.gridElementDist < canvas.width; j++) {
+            grid.add(
+              i,
+              j,
+              new Dot(
+                i * grid.gridElementDist * factor,
+                j * grid.gridElementDist * factor,
+                dotRadius * factor,
+                ctx
+              )
+            );
+          }
+          i++;
+        }
+      }
+
+      window.onresize = init;
+
+      function drawCanvas() {}
+
+      var lastHit, hit;
+      function handleMovement(eventX, eventY) {
+        var x = Math.round(eventX / grid.gridElementDist),
+          y = Math.round(eventY / grid.gridElementDist);
+        //$( ".log" ).append( "<span>hit:(" + x + ", " + y + ")</span> | " );
+        // get corresponding dot
+        var dot = grid.get(x, y);
+        if (dot) {
+          hit = new Hit(x, y, dot);
+          if (lastHit) {
+            if (hit.isNeighborOf(lastHit)) {
+              hit.drawConnection(lastHit, ctx);
+            }
+            lastHit = hit;
+          } else {
+            lastHit = hit;
+          }
+          dot.highlight();
+        }
+      }
+      var touchHandler = function (event) {
+        // track touch move
+        var x = event.originalEvent.touches[0].pageX,
+          y = event.originalEvent.touches[0].pageY;
+
+        handleMovement(x, y);
+      };
+      var mouseHandler = function (event) {
+        var x = event.pageX,
+          y = event.pageY;
+        handleMovement(x, y);
+      };
+      $("#dots").on("mousemove", mouseHandler);
+      $("#dots").on("touchmove", touchHandler);
+      var lastHit, currentHit;
+      function animloop() {
+        window.requestAnimationFrame(animloop);
+        drawCanvas();
+      }
+      init();
+      animloop();
+    </script>
+  </body>
+</html>
