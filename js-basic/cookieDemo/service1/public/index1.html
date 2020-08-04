@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="height: 100px; width: 100px; background-color: antiquewhite;">
+      我是service1
+    </div>
+    <button id="btn">点击</button>
+    <script>
+      let btn = document.getElementById("btn");
+      btn.onclick = () => {
+        setTimeout(() => {
+          console.log("我是settimeout1 i am fired");
+        }, 0);
+        fetch("http://localhost:3001/").then((res) => {
+          btn.innerHTML = "点击10086";
+          console.log("我是fetch 请求 我 i am fired");
+        });
+        console.log("同步代码1");
+        Promise.resolve().then((_) => {
+          console.log("第一个微任务回调2");
+        });
+        console.log("同步代码2");
+      };
+    </script>
+  </body>
+</html>

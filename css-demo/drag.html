@@ -5,90 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      canvas#chart {
-        border: 1px solid #777;
+      [draggable] {
+        user-select: none;
+      }
+      .drag-list {
+        overflow: hidden;
+        width: 500px;
+        border: 1px solid #ccc;
+      }
+      .drag-item {
+        float: left;
+        padding: 50px 20px;
+        width: 25%;
+        text-align: center;
+        color: #555;
+        background: #ddd;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        transition: 0.25s;
+      }
+      .drag-start {
+        opacity: 0.8;
+      }
+      .drag-enter {
+        opacity: 0.5;
+        transform: scale(0.9);
       }
     </style>
   </head>
   <body>
-    <canvas id="can1" width="800" height="600"></canvas>
+    <h1>Drag and Drop HTML5</h1>
+    <div class="drag-list">
+      <div class="drag-item" draggable="true">A</div>
+      <div class="drag-item" draggable="true">B</div>
+      <div class="drag-item" draggable="true">C</div>
+      <div class="drag-item" draggable="true">D</div>
+      <div class="drag-item" draggable="true">E</div>
+      <div class="drag-item" draggable="true">F</div>
+      <div class="drag-item" draggable="true">G</div>
+      <div class="drag-item" draggable="true">H</div>
+      <div class="drag-item" draggable="true">I</div>
+      <div class="drag-item" draggable="true">J</div>
+      <div class="drag-item" draggable="true">K</div>
+      <div class="drag-item" draggable="true">L</div>
+    </div>
     <script>
-      var can1 = document.getElementById("can1");
-      var ctx = can1.getContext("2d");
-      nums = [268, 1236, 1273, 1545, 1988];
-      datas = [
-        "11.1-11.2",
-        "11.3-11.9",
-        "11.10-11.16",
-        "11.17-11.23",
-        "11.24-11.30",
-      ];
-      //画出坐标线
-      function drawBorder() {
-        ctx.beginPath();
-        ctx.moveTo(100, 50);
-        ctx.lineTo(100, 550);
-        ctx.moveTo(100, 550);
-        ctx.lineTo(600, 550);
-        ctx.closePath();
-        ctx.stroke();
-      }
-      //画出折线
-      function drawLine() {
-        for (i = 0; i < nums.length - 1; i++) {
-          //起始坐标
-          var numsY = 550 - (nums[i] / 500) * 100;
-          var numsX = i * 100 + 150;
-          //终止坐标
-          var numsNY = 550 - (nums[i + 1] / 500) * 100;
-          var numsNX = (i + 1) * 100 + 150;
-          ctx.beginPath();
-          ctx.moveTo(numsX, numsY);
-          ctx.lineTo(numsNX, numsNY);
-          ctx.lineWidth = 6;
-          ctx.strokeStyle = "#80aa33";
-          ctx.closePath();
-          ctx.stroke();
-        }
-      }
-      //绘制折线点的菱形和数值，横坐标值，纵坐标值
-      function drawBlock() {
-        for (i = 0; i <= nums.length; i++) {
-          var numsY = 550 - (nums[i] / 500) * 100;
-          var numsX = i * 100 + 150;
-          ctx.beginPath();
-          // 画出折线上的方块
-          ctx.moveTo(numsX - 4, numsY);
-          ctx.lineTo(numsX, numsY - 4);
-          ctx.lineTo(numsX + 4, numsY);
-          ctx.lineTo(numsX, numsY + 4);
-          ctx.fill();
-          ctx.font = "15px scans-serif";
-          ctx.fillStyle = "black";
-          //折线上的点值
-          var text = ctx.measureText(nums[i]);
-          ctx.fillText(nums[i], numsX - text.width, numsY - 10);
-          //绘制纵坐标
-          var colText = ctx.measureText((nums.length - i) * 500);
-          ctx.fillText(
-            (nums.length - i) * 500,
-            90 - colText.width,
-            i * 100 + 55
+      class DragNSort {
+        constructor(config) {
+          this.$activeItem = null;
+          this.$container = config.container;
+          this.$items = Array.from(
+            this.$container.querySelectorAll("." + config.itemClass)
           );
-          //绘制横坐标并判断
-          if (i < 5) {
-            var rowText = ctx.measureText(datas[i]);
-            ctx.fillText(datas[i], numsX - rowText.width / 2, 570);
-          } else if (i == 5) {
-            return;
+          this.dragStartClass = config.dragStartClass;
+          this.dragEnterClass = config.dragEnterClass;
+        }
+        removeClasses() {
+          this.$items.forEach(($item) => {
+            $item.classList.remove(this.dragStartClass, this.dragEnterClass);
+          });
+        }
+
+        on(elements, eventType, handler) {
+          Array.from(elements).forEach((element) => {
+            element.addEventListener(eventType, handler.bind(element, this));
+          });
+        }
+
+        onDragStart(_this, event) {
+          _this.$activeItem = this;
+          this.classList.add(_this.dragStartClass);
+          event.dataTransfer.setData("text/html", this.innerHTML);
+        }
+        onDragEnd(_this) {
+          this.classList.remove(_this.dragStartClass);
+        }
+        onDragEnter(_this) {
+          this.classList.add(_this.dragEnterClass);
+        }
+        onDragLeave(_this) {
+          this.classList.remove(_this.dragEnterClass);
+        }
+        onDragOver(_this, event) {
+          if (event.preventDefault) {
+            event.preventDefault();
           }
-          ctx.closePath();
-          ctx.stroke();
+        }
+        onDrop(_this, event) {
+          if (_this.$activeItem !== this) {
+            _this.$activeItem.innerHTML = this.innerHTML;
+            this.innerHTML = event.dataTransfer.getData("text/html");
+          }
+          _this.removeClasses();
+        }
+        bind() {
+          this.on(this.$items, "dragstart", this.onDragStart);
+          this.on(this.$items, "dragend", this.onDragEnd);
+          this.on(this.$items, "dragover", this.onDragOver);
+          this.on(this.$items, "dragenter", this.onDragEnter);
+          this.on(this.$items, "dragleave", this.onDragLeave);
+          this.on(this.$items, "drop", this.onDrop);
+        }
+        init() {
+          this.bind();
         }
       }
-      drawBorder();
-      drawLine();
-      drawBlock();
+      // Instantiate
+      var draggable = new DragNSort({
+        container: document.querySelector(".drag-list"),
+        itemClass: "drag-item",
+        dragStartClass: "drag-start",
+        dragEnterClass: "drag-enter",
+      });
+      draggable.init();
     </script>
   </body>
 </html>

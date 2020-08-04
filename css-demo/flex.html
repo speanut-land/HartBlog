@@ -7,23 +7,34 @@
     <style>
       .container {
         display: flex;
-        height: 200px;
-      }
-      .left {
-        flex: 1;
-        flex-basis: 200px;
+        height: 100px;
         background-color: antiquewhite;
+        position: relative;
       }
-      .right {
-        flex: 1;
-        background-color: red;
+      .child-1 {
+        flex-grow: 1;
+        background-color: aqua;
+      }
+      .child-2 {
+        width: 300px;
+        height: 100px;
+        background-color: blue;
+        z-index: 10;
+        position: fixed;
+        transform: translateZ(0);
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <<<<<<< HEAD
+      <div class="child-1"></div>
+      <div class="child-2"></div>
+      <!-- <div class="child-3"></div> -->
+      =======
       <div class="left"></div>
       <div class="right"></div>
+      >>>>>>> 9a342da18c323f8573249d138ec8400cbff47081
     </div>
   </body>
 </html>

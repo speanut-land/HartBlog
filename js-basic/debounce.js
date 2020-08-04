@@ -16,3 +16,25 @@ function debounce(func, ms) {
     setTimeout(() => (isCoolDown = !isCoolDown), ms);
   };
 }
+
+function debounce2(fn) {
+  let timeout;
+  return function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fn.apply(this, arguments);
+    }, 500);
+  };
+}
+
+function throttle(fn) {
+  let canRun = true;
+  return function () {
+    if (!canRun) return;
+    canRun = false;
+    fn.apply(this, arguments);
+    setTimeout(() => {
+      canRun = true;
+    }, 500);
+  };
+}

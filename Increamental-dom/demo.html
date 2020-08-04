@@ -16,7 +16,7 @@
     <button>Increment</button>
   </body>
   <script>
-    const NODE_DATA_KEY = "__ID_Data__";
+    const NODE_DATA_KEY = '__ID_Data__';
 
     // The current nodes being processed
     let currentNode = null;
@@ -45,9 +45,7 @@
     }
 
     function nextNode() {
-      currentNode = currentNode
-        ? currentNode.nextSibling
-        : currentParent.firstChild;
+      currentNode = currentNode ? currentNode.nextSibling : currentParent.firstChild;
     }
 
     function exitNode() {
@@ -65,10 +63,7 @@
         return currentNode;
       }
 
-      const node =
-        name === "#text"
-          ? document.createTextNode("")
-          : document.createElement(name);
+      const node = name === '#text' ? document.createTextNode('') : document.createElement(name);
 
       currentParent.insertBefore(node, currentNode);
 
@@ -97,7 +92,7 @@
     function text(value) {
       nextNode();
 
-      const node = renderDOM("#text");
+      const node = renderDOM('#text');
 
       // checks for text updates
       const data = getData(node);
@@ -118,48 +113,53 @@
     }
 
     function render(data) {
-      elementOpen("h3");
+      elementOpen('h3');
       {
-        text("Hello, " + data.user);
+        text('Hello, ' + data.user);
       }
-      elementClose("h3");
-      elementOpen("p");
+      elementClose('h3');
+      elementOpen('p');
       {
-        text("Counter: ");
-        elementOpen("span");
+        text('Counter: ');
+        elementOpen('span');
         {
           text(data.counter);
         }
-        elementClose("span");
+        elementClose('span');
       }
-      elementClose("p");
+      elementClose('p');
       render2(data);
     }
 
     function render2(data) {
-      elementOpen("ul");
+      elementOpen('ul');
       {
-        text("Counter: ");
-        elementOpen("li");
+        text('Counter: ');
+        elementOpen('li');
         {
           text(data.counter);
         }
-        elementClose("li");
+        elementClose('li');
+        elementOpen('li');
+        {
+          text(data.counter);
+        }
+        elementClose('li');
       }
-      elementClose("ul");
+      elementClose('ul');
     }
 
-    document.querySelector("button").addEventListener("click", () => {
+    document.querySelector('button').addEventListener('click', () => {
       data.counter++;
       patch(document.body, render, data);
     });
-    document.querySelector("input").addEventListener("input", (e) => {
+    document.querySelector('input').addEventListener('input', e => {
       data.user = e.target.value;
       patch(document.body, render, data);
     });
 
     const data = {
-      user: "Alexey",
+      user: 'Alexey',
       counter: 2,
     };
 
