@@ -26,6 +26,22 @@ let quickSort = (items, left, right) => {
     }
   }
   return items;
+  function partition(arr, left, right) {
+    let pivot = arr[(left + right) >>> 1];
+    let i = left,
+      j = right;
+    while (i <= j) {
+      while (arr[i] < pivot) i++;
+      while (arr[j] > pivot) j--;
+      if (i <= j) {
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        i++;
+        j--;
+      }
+    }
+    console.log(arr);
+    return i;
+  }
 };
 
 let items = [5, 3, 7, 6, 2, 9];

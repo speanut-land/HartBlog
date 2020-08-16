@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>Source element:</h3>
+    <p id="source">
+      <style>
+        #source {
+          color: red;
+        }
+      </style>
+      Take a look at<br />how this text<br />is interpreted below.
+      <span style="display: none;">HIDDEN TEXT</span>
+    </p>
+    <h3>Result of textContent:</h3>
+    <textarea id="textContentOutput" rows="6" cols="30">...</textarea>
+    <h3>Result of innerText:</h3>
+    <textarea id="innerTextOutput" rows="6" cols="30" readonly>...</textarea>
+    <script>
+      const source = document.getElementById("source");
+      const textContentOutput = document.getElementById("textContentOutput");
+      const innerTextOutput = document.getElementById("innerTextOutput");
+      textContentOutput.addEventListener("input", (e) => {
+        e.preventDefault();
+      });
+      textContentOutput.innerHTML = source.textContent;
+      innerTextOutput.innerHTML = source.innerText;
+    </script>
+  </body>
+</html>

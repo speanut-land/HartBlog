@@ -9,32 +9,30 @@
         display: flex;
         height: 100px;
         background-color: antiquewhite;
-        position: relative;
       }
-      .child-1 {
-        flex-grow: 1;
+      .child1 {
         background-color: aqua;
-      }
-      .child-2 {
-        width: 300px;
-        height: 100px;
-        background-color: blue;
-        z-index: 10;
-        position: fixed;
-        transform: translateZ(0);
+        margin: 0 10px;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <<<<<<< HEAD
-      <div class="child-1"></div>
-      <div class="child-2"></div>
-      <!-- <div class="child-3"></div> -->
-      =======
-      <div class="left"></div>
-      <div class="right"></div>
-      >>>>>>> 9a342da18c323f8573249d138ec8400cbff47081
+      <div class="child1" style="flex-basis: 200px;"></div>
+      <div class="child1" style="flex-grow: 1;"></div>
+      <div class="child1" style="flex-basis: 220px; flex-grow: 1;"></div>
     </div>
+    <script>
+      localStorage.setItem("1", "1");
+      setTimeout(() => {
+        console.log(localStorage.getItem("1"));
+        setTimeout(() => {
+          console.log(localStorage.removeItem("1"));
+          setTimeout(() => {
+            console.log(localStorage.getItem("1"));
+          }, 10);
+        }, 2000);
+      }, 1000);
+    </script>
   </body>
 </html>

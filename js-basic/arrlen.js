@@ -13,14 +13,14 @@ function defineProperty(data, key, val) {
 }
 
 let c = [0];
-Object.defineProperty(c, "length", {
+Object.defineProperty(c, "0", {
   enumerable: true,
   configurable: true,
   get() {
     return val;
   },
   set(newVal) {
-    console.log(this, val);
-    val = newVal;
+    console.log(newVal);
   },
 });
+c[0] = 1;
