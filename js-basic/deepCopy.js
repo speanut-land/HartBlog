@@ -1,23 +1,36 @@
 function deepCopy(obj) {
-  if(typeof obj !== 'object') throw  '错误啦 ';
-  let res =  {};
-  for (const key of Object.getOwnPropertyNames(obj)) {
-    if(typeof obj[key] === 'object') {
-      res[key] = deepCopy(obj[key])
-    }else {
-      res[key] = obj[key]
+  if (typeof obj !== "object") throw "错误啦 ";
+  let res = {};
+  for (const key of Object.keys(obj)) {
+    if (typeof obj[key] === "object") {
+      res[key] = deepCopy(obj[key]);
+    } else {
+      res[key] = obj[key];
     }
   }
-  return res
+  return res;
+}
+function deepClone(obj) {
+  if (!obj) return null;
+  if (obj instanceof RegExp) return new RegExp(obj);
+  if (obj instanceof Date) return new Date(obj);
+  if (typeof obj !== "object") {
+    return obj;
+  }
+  var newObj = new obj.__proto__.constructor();
+  for (var key in obj) {
+    newObj[key] = deepClone(obj[key]);
+  }
+  return newObj;
 }
 
 let ccc = {
-  name: 'haha',
+  name: "haha",
   fullname: {
-    xixi: 'xixi',
+    xixi: "xixi",
     math: {
-      jj: 'jj'
-    }
-  }
-}
-console.log(deepCopy(123) === ccc)
+      jj: "jj",
+    },
+  },
+};
+console.log(deepCopy(ccc) === ccc);

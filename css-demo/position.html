@@ -10,6 +10,32 @@
         margin: 0;
         padding: 0;
       }
+      .dashed-box {
+        position: relative;
+        z-index: 1;
+        border: dashed;
+        height: 8em;
+        margin-bottom: 1em;
+        margin-top: 2em;
+      }
+      .gold-box {
+        position: absolute;
+        z-index: 3; /* put .gold-box above .green-box and .dashed-box */
+        background: gold;
+        width: 80%;
+        left: 60px;
+        top: 3em;
+      }
+      .green-box {
+        position: absolute;
+        z-index: 2; /* put .green-box above .dashed-box */
+        background: lightgreen;
+        width: 20%;
+        left: 65%;
+        top: -25px;
+        height: 7em;
+        opacity: 0.9;
+      }
     </style>
   </head>
   <body>
@@ -26,14 +52,22 @@
     >
       <div
         style="
-          width: 100px;
-          height: 100px;
+          width: 40px;
+          height: 40px;
           background-color: aquamarine;
-          position: absolute;
+          position: relative;
+        "
+      ></div>
+      <div
+        style="
+          width: 40px;
+          height: 40px;
+          background-color: aquamarine;
+          position: relative;
         "
       ></div>
     </div>
-    <div
+    <!-- <div
       class="parent"
       style="
         height: 200px;
@@ -65,6 +99,11 @@
         position: sticky;
         top: 300px;
       "
-    ></div>
+    ></div> -->
+    <!-- <div class="dashed-box">
+      Dashed box
+      <span class="gold-box">Gold box</span>
+      <span class="green-box">Green box</span>
+    </div> -->
   </body>
 </html>

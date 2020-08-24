@@ -5,22 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      * {
+        margin: 0;
+      }
       .container {
         display: flex;
-        height: 100px;
         background-color: antiquewhite;
+        min-height: 1000px;
       }
       .child1 {
         background-color: aqua;
-        margin: 0 10px;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="child1" style="flex-basis: 200px;"></div>
-      <div class="child1" style="flex-grow: 1;"></div>
-      <div class="child1" style="flex-basis: 220px; flex-grow: 1;"></div>
+      <div
+        class="child1"
+        style="flex-grow: 1; background-color: darkcyan;"
+      ></div>
     </div>
     <script>
       localStorage.setItem("1", "1");

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .pie-simple {
+        width: 128px;
+        height: 128px;
+        background-color: white;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .pie-left,
+      .pie-right {
+        width: 50%;
+        height: 100%;
+        float: left;
+        position: relative;
+        overflow: hidden;
+      }
+      .pie-left::before,
+      .pie-right::before,
+      .pie-right::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: red;
+      }
+      .pie-left::before {
+        left: 100%;
+        transform-origin: left;
+        transform: rotate(calc(3.6deg * (var(--percent) - 50)));
+        opacity: calc(99999 * (var(--percent) - 50));
+      }
+      .pie-right::before {
+        right: 100%;
+        transform-origin: right;
+        transform: rotate(calc(3.6deg * var(--percent)));
+      }
+      .pie-right::after {
+        opacity: calc(99999 * (var(--percent) - 50));
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pie-item">
+      <p>10%大小</p>
+      <div class="pie-simple" style="--percent: 10;">
+        <div class="pie-left"></div>
+        <div class="pie-right"></div>
+      </div>
+    </div>
+    <div class="pie-item">
+      <p>40%大小</p>
+      <div class="pie-simple" style="--percent: 40;">
+        <div class="pie-left"></div>
+        <div class="pie-right"></div>
+      </div>
+    </div>
+    <div class="pie-item">
+      <p>80%大小</p>
+      <div class="pie-simple" style="--percent: 80;">
+        <div class="pie-left"></div>
+        <div class="pie-right"></div>
+      </div>
+    </div>
+    <div class="pie-item">
+      <p>99%大小</p>
+      <div class="pie-simple" style="--percent: 99;">
+        <div class="pie-left"></div>
+        <div class="pie-right"></div>
+      </div>
+    </div>
+  </body>
+</html>
