@@ -2,7 +2,7 @@ function Scheduler() {
   this.list = [];
   this.add = (promiseCreator) => this.list.push(promiseCreator);
 
-  this.maxCount = 2;
+  this.maxCount = 3;
 
   var tempRunIndex = 0;
 

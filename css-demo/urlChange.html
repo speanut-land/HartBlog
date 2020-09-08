@@ -14,6 +14,24 @@
         };
         history.pushState(stateObj, "page 2", "bar.html");
       }
+      let _wr = function (type) {
+        let orig = history[type];
+        return function () {
+          let rv = orig.apply(this, arguments);
+          let e = new Event(type);
+          e.arguments = arguments;
+          window.dispatchEvent(e);
+          return rv;
+        };
+      };
+      window.addEventListener("replaceState", function (e) {
+        console.log("THEY DID IT AGAIN! replaceState 111111");
+      });
+      window.addEventListener("pushState", function (e) {
+        console.log("THEY DID IT AGAIN! pushState 2222222");
+      });
+      history.pushState = _wr("pushState");
+      history.replaceState = _wr("replaceState");
     </script>
   </body>
 </html>

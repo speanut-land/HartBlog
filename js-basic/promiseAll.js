@@ -1,6 +1,6 @@
 Promise._all = function promiseAll(promises) {
   return new Promise(function (resolve, reject) {
-    if (!isArray(promises)) {
+    if (!Array.isArray(promises)) {
       return reject(new TypeError("arguments must be an array"));
     }
     let count = 0;
