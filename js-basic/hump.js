@@ -1,4 +1,4 @@
-let str = "border-left-top";
+let str = "borderLeftTop";
 let reg = /-\w/g;
 console.log(
   str.replace(reg, function (i) {
@@ -7,5 +7,8 @@ console.log(
 );
 
 function underline(str) {
-  return str.replace(/\B([A-Z])/g, "_$1").toLowerCase();
+  return str.replace(/([A-Z])/g, "_$1").toLowerCase();
 }
+console.log(
+  underline(str)
+);

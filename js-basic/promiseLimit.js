@@ -4,8 +4,6 @@ function Scheduler() {
 
   this.maxCount = 3;
 
-  var tempRunIndex = 0;
-
   this.taskStart = function () {
     for (var i = 0; i < this.maxCount; i++) {
       this.request();
@@ -14,11 +12,9 @@ function Scheduler() {
 
   this.request = () => {
     if (!this.list.length) return;
-    tempRunIndex++;
     this.list
       .shift()()
       .then(() => {
-        tempRunIndex--;
         this.request();
       });
   };
@@ -37,8 +33,8 @@ function addTask(time, order) {
 }
 
 addTask(1000, 1);
-addTask(500, 2);
-addTask(300, 3);
-addTask(400, 4);
+addTask(2000, 2);
+addTask(3000, 3);
+addTask(4000, 4);
 
 scheduler.taskStart();

@@ -8,6 +8,10 @@ class EventEmitter {
     }
   }
   once(keyword, fn) {
+    function onceFn(...args) {
+      fn.apply(null, args);
+      this.removeListener(event, fn);
+  }
     if (this.cache.has(keyword)) {
       this.cache.get(keyword).push(fn);
     } else {
