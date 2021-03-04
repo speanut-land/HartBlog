@@ -33,12 +33,23 @@ function parseUrl(url) {
     return pre;
   }, {});
 }
-const queryString = (str) => {
-  const obj = {};
-  str.replace(/([^?&=]+)=([^&]+)/g, (_, k, v) => {
-    obj[k] = v;
+const queryString = (url) => {
+  let regx = /([^&?=]+)=([^&?=]+)/g;
+  let obj = {};
+
+  url.replace(regx, (...args) => {
+    if (obj[args[1]]) {
+      obj[args[1]] = Array.isArray(obj[args[1]])
+        ? obj[args[1]]
+        : [obj[args[1]]];
+      obj[args[1]].push(args[2]);
+    } else {
+      obj[args[1]] = args[2];
+    }
   });
+
   return obj;
 };
+
 console.log(queryString("www.u.com/home?id=2&type=0&dtype=-1"));
 console.log(parseUrl("www.u.com/home?id=2&type=0&dtype=-1"));

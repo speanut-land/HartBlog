@@ -2,7 +2,7 @@ function Scheduler() {
   this.list = [];
   this.add = (promiseCreator) => this.list.push(promiseCreator);
 
-  this.maxCount = 3;
+  this.maxCount = 2;
 
   this.taskStart = function () {
     for (var i = 0; i < this.maxCount; i++) {
@@ -32,9 +32,9 @@ function addTask(time, order) {
   scheduler.add(() => timeout(time).then(() => console.log(order)));
 }
 
-addTask(1000, 1);
-addTask(2000, 2);
-addTask(3000, 3);
-addTask(4000, 4);
+addTask(1000, '1')
+addTask(500, '2')
+addTask(300, '3')
+addTask(400, '4')
 
 scheduler.taskStart();
